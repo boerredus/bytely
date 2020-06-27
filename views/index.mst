@@ -1,0 +1,59 @@
+<html>
+<head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js"></script>
+    <link rel="stylesheet" href="/assets/css/main.css">
+    <title>Bytely</title>
+</head>
+
+<body>
+    <input type="text" placeholder="Type or paste an URL here" required>
+    <button>Shorten it!</button>
+
+    <script>
+        const input = document.querySelector('input')
+        document.querySelector('button').addEventListener('mousedown', function() {
+            const input = document.querySelector('input'),
+                isURL = () => {
+                    try {
+                        new URL(input.value);
+                    } catch (_) {
+                        return false;
+                    }
+
+                    return true;
+                };
+
+            if (!isURL()) {
+                const toast = document.createElement('div');
+                toast.setAttribute('style', 'position: absolute; bottom: 40px; background-color: red; color: white; padding: 25px; left: 15px;');
+                toast.innerHTML = 'Invalid URL!';
+                document.body.append(toast);
+
+                setTimeout(() => toast.remove(), 5000);
+                return;
+            }
+
+            fetch(window.location.href, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ url: input.value })
+            })
+                .then(res => res.text())
+                .then(res => {
+                    this.setAttribute('data-clipboard-text', window.location.href + res);
+                    new ClipboardJS(this).on('success', function(e) {
+                        const toast = document.createElement('div');
+
+                        e.clearSelection();
+                        toast.setAttribute('style', 'position: absolute; bottom: 40px; background-color: green; color: white; padding: 25px; left: 15px;');
+                        toast.innerHTML = 'Result successfully copied to clipboard!';
+                        document.body.append(toast);
+
+                        setTimeout(() => toast.remove(), 5000);
+                    });
+                });
+        });
+    </script>
+</body>
+
+</html>

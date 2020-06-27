@@ -1,0 +1,13 @@
+<html>
+    <script>
+        (() => {
+            {{^url}}
+                window.location.href = '/';
+                return;
+            {{/url}}
+            const res = document.createElement('div');
+            res.innerHTML = '{{url}}';
+            window.location.href = res.innerHTML;
+        })()
+    </script>
+</html>
