@@ -1,7 +1,7 @@
 require('./models/URL');
 require('dotenv').config();
 
-const app = require('app'),
+const app = require('./app'),
     mongoose = require('mongoose');
 
 mongoose.connect(process.env.DATABASE, {
