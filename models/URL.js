@@ -15,8 +15,4 @@ const schema = new mongoose.Schema({
     }
 });
 
-schema.pre('save', async function(next) {
-    next();
-})
-
 module.exports = mongoose.model('URL', schema);
