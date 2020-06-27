@@ -7,6 +7,6 @@ const URLController = require('../controllers/URLController');
 router.get('/', URLController.add);
 router.post('/', URLController.addAction);
 
-router.get('/:url', URLController.url);
+router.get('/:hash', URLController.url);
 
 module.exports = router;
